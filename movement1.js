@@ -7,14 +7,17 @@ var canvas = document.getElementById('canvas'),
       y: 50,
       w: 104,
       h: 149,
-      faceRight: false,
-      faceLeft: true,
+      sx: 0,
+      sy: 301,
+      faceRight: true,
+      faceLeft: false,
       counter: 0,
       step: 15,
       nextStep: 0,
       endStep: 90,
       start: {
         rightX: 0,
+        leftX: 100,
         y: 301
       }
     },
@@ -51,8 +54,8 @@ function reset() {
 function drawPlayer() {
   if (true) {
     move(0, true, false);
-    player.x += 0.1;
-    if (player.x > canvas.width + player.w + 0.1) {
+    player.x += 1;
+    if (player.x > canvas.width + player.w + 1) {
       player.x = -player.w;
     }
   }
@@ -63,7 +66,7 @@ function drawPlayer() {
       player.x = canvas.width + player.w;
     }
   }
-  if (true) {
+  if (false && player.faceRight === true) {
     player.sx = player.start.rightX;
     reset();
   }
@@ -72,7 +75,6 @@ function drawPlayer() {
     reset();
   }
   ctx.drawImage(character, player.sx, player.sy, player.w, player.h, player.x, player.y, player.w, player.h);
-
 }
 
 function keyDown(e) {
@@ -94,8 +96,8 @@ function keyUp(e) {
 function drawBG() {
   ctx.fillStyle = '#00f';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  //ctx.fillStyle = '#0f0';
-  //ctx.fillRect(0, 185, canvas.width, 15);
+  ctx.fillStyle = '#0f0';
+  ctx.fillRect(0, 185, canvas.width, 15);
 }
 
 function clearCanvas() {
@@ -107,20 +109,18 @@ function loop() {
   drawBG();
   drawPlayer();
   requestAnimFrame(loop);
-ctx.drawImage(character1, player.sx+100, player.sy+1, player.w+1, player.h+1, 800, player.y+1, player.w+1, player.h+1);
+  ctx.drawImage(character1, player.sx+100, player.sy+100, player.w+1, player.h+1, 780, player.y-15, player.w+1, player.h+1);
 
 }
 
 function init() {
-  character.src = 'block.png';
-  character1.src = 'gb_walk.png';
-
+  character1.src = 'block.png';
+  character.src = 'gb_walk.png';
 
   window.addEventListener('keydown', keyDown, false);
   window.addEventListener('keyup', keyUp, false);
 
   loop();
-
 }
 
 init();
